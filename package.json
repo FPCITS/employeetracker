@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "dotenv": "^8.2.0",
+    "figlet": "^1.5.2",
+    "inquirer": "^7.0.4",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
+    "node.js": "^0.0.1-security"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
