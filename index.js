@@ -1,7 +1,7 @@
 require('dotenv').config();
 import { createConnection } from 'mysql';
 import { prompt } from 'inquirer';
-import cTable from 'console.table';
+import console from 'console.table';
 import figlet from 'figlet';
 
 const connection = createConnection({
@@ -188,13 +188,13 @@ const addNewEmployee = () => {
       {
         name: 'None',
         value: 0
-      }
+      },
     emplRes.forEach(({ first_name, last_name, id }) => {
       employeeChoice.push({
         name: first_name + " " + last_name,
         value: id
       });
-    });
+    }),
     
     connection.query("SELECT * FROM ROLE", (err, rolRes) => {
       if (err) throw err;
@@ -230,85 +230,85 @@ const addNewEmployee = () => {
           message: "Employee's manager? (could be null)"
         }
       ]
-  
+    }),
+
       prompt(questions)
         .then(response => {
           const query = `INSERT INTO EMPLOYEE (first_name, last_name, role_id, manager_id) VALUES (?)`;
           let manager_id = response.manager_id !== 0? response.manager_id: null;
           connection.query(query, [[response.first_name, response.last_name, response.role_id, manager_id]], (err, res) => {
             if (err) throw err;
-            console.log(`successfully inserted employee ${response.first_name} ${response.last_name} with id ${res.insertId}`);
+            console.log(`Successfully added employee ${response.first_name} ${response.last_name} with id ${res.insertId}`);
             startPrompt();
           });
         })
         .catch(err => {
           console.error(err);
-        });
-    })
-  });
-}
+        }),
 
-const updateRole = () => {
-  //get all the employee list 
-  connection.query("SELECT * FROM EMPLOYEE", (err, emplRes) => {
-    if (err) throw err;
-    const employeeChoice = [];
-    emplRes.forEach(({ first_name, last_name, id }) => {
-      employeeChoice.push({
-        name: first_name + " " + last_name,
-        value: id
-      });
-    });
-    
-    //get all the role list to make choice of employee's role
-    connection.query("SELECT * FROM ROLE", (err, rolRes) => {
-      if (err) throw err;
-      const roleChoice = [];
-      rolRes.forEach(({ title, id }) => {
-        roleChoice.push({
-          name: title,
-          value: id
+      function updateRole() {
+
+        connection.query("SELECT * FROM EMPLOYEE", (err, emplRes) => {
+          if (err)
+            throw err;
+          const employeeChoice = [];
+          emplRes.forEach(({ first_name, last_name, id }) => {
+            employeeChoice.push({
+              name: first_name + " " + last_name,
+              value: id
+            });
           });
-        });
-     
-      let questions = [
-        {
-          type: "list",
-          name: "id",
-          choices: employeeChoice,
-          message: "whose role do you want to update?"
         },
-        {
-          type: "list",
-          name: "role_id",
-          choices: roleChoice,
-          message: "what is the employee's new role?"
-        }
-      ]
-  
-      prompt(questions)
-        .then(response => {
-          const query = `UPDATE EMPLOYEE SET ? WHERE ?? = ?;`;
-          connection.query(query, [
-            {role_id: response.role_id},
-            "id",
-            response.id
-          ], (err, res) => {
-            if (err) throw err;
-            
-            console.log("successfully updated employee's role!");
-            startPrompt();
-          });
-        })
-        .catch(err => {
-          console.error(err);
+
+          connection.query("SELECT * FROM ROLE", (err, rolRes) => {
+            if (err)
+              throw err;
+            const roleChoice = [];
+            rolRes.forEach(({ title, id }) => {
+              roleChoice.push({
+                name: title,
+                value: id
+              });
+            });
+
+            let questions = [
+              {
+                type: "list",
+                name: "id",
+                choices: employeeChoice,
+                message: "Whose role do you want to update?"
+              },
+              {
+                type: "list",
+                name: "role_id",
+                choices: roleChoice,
+                message: "What is the employee's new role?"
+              }
+            ];
+
+            prompt(questions)
+              .then(response => {
+                const query = `UPDATE EMPLOYEE SET ? WHERE ?? = ?;`;
+                connection.query(query, [
+                  { role_id: response.role_id },
+                  "id",
+                  response.id
+                ], (err, res) => {
+                  if (err)
+                    throw err;
+
+                  console.log("Successfully updated employee's role!");
+                  startPrompt();
+                });
+              })
+              .catch(err => {
+                console.error(err);
+              
         });
-      })
-  });
-}
+      
 
 const viewEmployeeByManager =  () => {
-  //get all the employee list 
+
   connection.query("SELECT * FROM EMPLOYEE", (err, emplRes) => {
     if (err) throw err;
     const employeeChoice = [{
@@ -327,7 +327,7 @@ const viewEmployeeByManager =  () => {
         type: "list",
         name: "manager_id",
         choices: employeeChoice,
-         message: "whose role do you want to update?"
+         message: "Whose role do you want to update?"
       },
     ]
   
@@ -363,7 +363,7 @@ const viewEmployeeByManager =  () => {
 }
 
 const updateManager = ()=> {
-  //get all the employee list 
+
   connection.query("SELECT * FROM EMPLOYEE", (err, emplRes) => {
     if (err) throw err;
     const employeeChoice = [];
@@ -377,7 +377,7 @@ const updateManager = ()=> {
     const managerChoice = [{
       name: 'None',
       value: 0
-    }]; //an employee could have no manager
+    }]; 
     emplRes.forEach(({ first_name, last_name, id }) => {
       managerChoice.push({
         name: first_name + " " + last_name,
@@ -390,13 +390,13 @@ const updateManager = ()=> {
         type: "list",
         name: "id",
         choices: employeeChoice,
-        message: "who do you want to update?"
+        message: "Who do you want to update?"
       },
       {
         type: "list",
         name: "manager_id",
         choices: managerChoice,
-        message: "whos is the employee's new manager?"
+        message: "Who is the employee's new manager?"
       }
     ]
   
@@ -570,10 +570,4 @@ const viewBudget = () => {
     .catch(err => {
       console.error(err);
     });
-
-    app.listen(PORT, () => {
-      console.log(`Server listening on: http://localhost:${PORT}`);
-    });
-  });
-
-};
+  }),

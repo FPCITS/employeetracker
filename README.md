@@ -20,9 +20,15 @@ This project is to demonstrate our ability to build a command-line application f
     
   Follow these steps to install or run this application:
 
- Step 1: Launch your terminal. <br>
- Step 2: Navigate to the directory containing your .js file. <br>
- Step 3: Run your file using the "node index.js" command.
+ Step 1: Download an SQL interface <br>
+ Step 2: Export git repository files <br>
+ Step 3: Install node.js, inquirer, and MYSQL <br>
+ Step 4: Run your file using the "node index.js" command.
+
+ ## Walkthrough
+ 
+ https://drive.google.com/file/d/15ags3pXVFXN7Lb5fJTFb0r39AFP2B_Yv/view
+
       
 ## Usage
 
@@ -36,9 +42,12 @@ You can contribute to this project by:
       
 ## Testing
 
- Step 1: Launch your terminal. <br>
- Step 2: Navigate to the directory containing your .js file. <br>
- Step 3: Run your file using the "node index.js" command.
+ Follow these steps to install or run this application:
+
+ Step 1: Download an SQL interface <br>
+ Step 2: Export git repository files <br>
+ Step 3: Install node.js, inquirer, and MYSQL <br>
+ Step 4: Run your file using the "node index.js" command.
       
 ## Questions
       
